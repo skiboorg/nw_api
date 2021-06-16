@@ -1,0 +1,13 @@
+djangorestframework
+django-cors-headers
+pillow
+djoser
+pytils
+django-ckeditor
+requests
+beautifulsoup4
+lxml
+django-colorfield
+googletrans==3.1.0a0
+goslate
+discord.py
