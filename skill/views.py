@@ -1,5 +1,6 @@
 import json
-
+from random import choices
+import string
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics
@@ -25,9 +26,11 @@ class Builds(APIView):
     def post(self, request):
         data = request.data
         print(data)
-        new_build = Build.objects.create(
+        name_slug = ''.join(choices(string.ascii_lowercase + string.digits, k=8))
+        Build.objects.create(
             weapon1_id=data['weapon1'],
             weapon2_id=data['weapon2'],
+            name_slug=name_slug,
             checked_skills_left_w1=data['checked_skills_left_w1'],
             checked_skills_right_w1=data['checked_skills_right_w1'],
             checked_skills_left_w2=data['checked_skills_left_w2'],
@@ -35,7 +38,7 @@ class Builds(APIView):
             description=data['description'],
             name=data['name'],
         )
-        return Response({'slug':new_build.name_slug},status=200)
+        return Response({'slug':name_slug},status=200)
     def get(self,request):
         print(self.request.query_params.get('for'))
         slug = self.request.query_params.get('slug')
@@ -50,6 +53,11 @@ class Builds(APIView):
             build = Build.objects.filter(is_active=True)[:3]
             seriarizer = BuildShortSerializer(build, many=True)
             return Response(seriarizer.data, status=200)
+        if self.request.query_params.get('for') == 'all':
+            build = Build.objects.filter(is_active=True)
+            seriarizer = BuildShortSerializer(build, many=True)
+            return Response(seriarizer.data, status=200)
+
 
 
 class ParceHtml(APIView):

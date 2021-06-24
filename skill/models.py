@@ -1,7 +1,6 @@
 from django.db import models
 from pytils.translit import slugify
-from random import choices
-import string
+
 
 
 class Weapon(models.Model):
@@ -84,10 +83,7 @@ class Build(models.Model):
     votes = models.IntegerField('Голосов', default=1)
     is_active = models.BooleanField(default=False)
 
-    def save(self, *args, **kwargs):
-        slug = ''.join(choices(string.ascii_lowercase + string.digits, k=8))
-        self.name_slug = slug
-        super(Build, self).save(*args, **kwargs)
+
 
     class Meta:
         ordering = ['-id']
