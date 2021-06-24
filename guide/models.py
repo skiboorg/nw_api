@@ -29,7 +29,10 @@ class Guide(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.name}'
+        if self.is_video:
+            return f'{self.id} | Видео гайд | {self.category.name}  '
+        else:
+            return f'Гайд | {self.name} | {self.category.name}'
 
     class Meta:
         ordering = ['created_at']

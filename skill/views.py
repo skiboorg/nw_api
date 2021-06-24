@@ -26,9 +26,12 @@ class Builds(APIView):
         data = request.data
         print(data)
         new_build = Build.objects.create(
-            weapon_id=data['weapon'],
-            checked_skills_left=data['checked_skills_left'],
-            checked_skills_right=data['checked_skills_right'],
+            weapon1_id=data['weapon1'],
+            weapon2_id=data['weapon2'],
+            checked_skills_left_w1=data['checked_skills_left_w1'],
+            checked_skills_right_w1=data['checked_skills_right_w1'],
+            checked_skills_left_w2=data['checked_skills_left_w2'],
+            checked_skills_right_w2=data['checked_skills_right_w2'],
             description=data['description'],
             name=data['name'],
         )

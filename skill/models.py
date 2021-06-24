@@ -12,6 +12,7 @@ class Weapon(models.Model):
     main_char = models.CharField(max_length=255, blank=True, null=True)
     image = models.ImageField('Изображение', upload_to='images/weapon/', blank=True)
     description = models.TextField(blank=True, null=True)
+    is_selected = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.order} | {self.name}'
@@ -68,13 +69,19 @@ class Skill(models.Model):
 
 
 class Build(models.Model):
-    weapon = models.ForeignKey(Weapon, on_delete=models.CASCADE, null=True, blank=True,
-                               verbose_name='Оружие')
+    weapon1 = models.ForeignKey(Weapon, on_delete=models.CASCADE, null=True, blank=True,
+                               verbose_name='Оружие',related_name='weapon1')
+    weapon2 = models.ForeignKey(Weapon, on_delete=models.CASCADE, null=True, blank=True,
+                               verbose_name='Оружие',related_name='weapon2')
     name = models.CharField('Название ', max_length=255, blank=True, null=True)
     name_slug = models.CharField(max_length=255, blank=True, null=True, db_index=True)
     description = models.TextField(blank=True, null=True)
-    checked_skills_left = models.JSONField(blank=True,null=True)
-    checked_skills_right = models.JSONField(blank=True,null=True)
+    checked_skills_left_w1 = models.JSONField(blank=True,null=True)
+    checked_skills_right_w1 = models.JSONField(blank=True,null=True)
+    checked_skills_left_w2 = models.JSONField(blank=True, null=True)
+    checked_skills_right_w2 = models.JSONField(blank=True, null=True)
+    total_rating = models.IntegerField('Рейтинг', default=1)
+    votes = models.IntegerField('Голосов', default=1)
     is_active = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):

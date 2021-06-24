@@ -28,16 +28,19 @@ class WeaponsSerializer(serializers.ModelSerializer):
             'name_slug',
             'image',
             'main_char',
+            'is_selected'
         ]
 
 class BuildSerializer(serializers.ModelSerializer):
-    weapon = WeaponSerializer(many=False, required=False, read_only=True)
+    weapon1 = WeaponSerializer(many=False, required=False, read_only=True)
+    weapon2 = WeaponSerializer(many=False, required=False, read_only=True)
     class Meta:
         model = Build
         fields = '__all__'
 
 class BuildShortSerializer(serializers.ModelSerializer):
-    weapon = WeaponsSerializer(many=False, required=False, read_only=True)
+    weapon1 = WeaponsSerializer(many=False, required=False, read_only=True)
+    weapon2 = WeaponsSerializer(many=False, required=False, read_only=True)
     class Meta:
         model = Build
         fields = '__all__'

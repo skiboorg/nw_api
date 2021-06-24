@@ -4,6 +4,7 @@ from pytils.translit import slugify
 
 
 class PostItem(models.Model):
+    order = models.IntegerField(default=100)
     name = models.CharField('Название ', max_length=255, blank=True, null=True)
     name_slug = models.CharField(max_length=255, blank=True, null=True, db_index=True, editable=False)
     image = models.ImageField('Изображение', upload_to='images/post/', blank=True, null=True)
@@ -18,7 +19,7 @@ class PostItem(models.Model):
         super(PostItem, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.order} | {self.name}'
 
     class Meta:
-        ordering = ['created_at']
+        ordering = ['order']
