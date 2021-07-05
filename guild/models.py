@@ -36,7 +36,7 @@ class Guild(models.Model):
 
 class GuildFeedback(models.Model):
     user = models.ForeignKey('user.User', on_delete=models.CASCADE,null=True,blank=False)
-    guild = models.ForeignKey(Guild, on_delete=models.CASCADE,null=True,blank=False)
+    guild = models.ForeignKey(Guild, on_delete=models.CASCADE,null=True,blank=False,related_name='feedbacks')
     text = models.TextField(blank=True, null=True)
     rating = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)

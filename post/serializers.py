@@ -12,6 +12,7 @@ class PostsSerializer(serializers.ModelSerializer):
             'image',
             'short_description',
             'views',
+            'created_at'
         ]
 
 

@@ -15,6 +15,7 @@ class GuildsSerializer(serializers.ModelSerializer):
             'total_rating',
             'server',
             'style',
+            'feedbacks'
         ]
 
 

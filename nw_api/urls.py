@@ -15,6 +15,7 @@ urlpatterns = [
     path('api/post/', include('post.urls')),
     path('api/guild/', include('guild.urls')),
     path('api/guide/', include('guide.urls')),
+    # path('api/dkp/', include('dkp.urls')),
 
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('auth/', include('djoser.urls')),

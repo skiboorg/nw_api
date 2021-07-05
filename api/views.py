@@ -144,3 +144,7 @@ class GetBanner(generics.ListAPIView):
 class GetFaq(generics.ListAPIView):
     serializer_class = FaqSerializer
     queryset = Faq.objects.all()
+
+class GetSocial(generics.ListAPIView):
+    serializer_class = SocialItemSerializer
+    queryset = SocialItem.objects.all()

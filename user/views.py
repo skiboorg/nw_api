@@ -57,6 +57,11 @@ class UserRecoverPassword(APIView):
             return Response({'result': False}, status=200)
 
 
+class GetMembers(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+    queryset = User.objects.filter(is_guild_member=True)
+
 
 
 # class ChangePassword(APIView):

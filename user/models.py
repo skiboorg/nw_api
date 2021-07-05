@@ -36,12 +36,17 @@ class Promo(models.Model):
 
 class User(AbstractUser):
 
-    username = None
-    first_name = None
-    last_name = None
+    username = models.CharField('username', max_length=50, blank=True, null=True)
+    first_name = models.CharField('first_name', max_length=50, blank=True, null=True)
+    last_name = models.CharField('last_name', max_length=50, blank=True, null=True)
     email = models.EmailField('Эл. почта',blank=True,null=True, unique=True)
-    nickname = models.CharField('ФИО', max_length=50, blank=True, null=True)
-
+    nickname = models.CharField('Ник', max_length=50, blank=True, null=True)
+    discord = models.CharField('Дискорд', max_length=50, blank=True, null=True)
+    is_leader = models.BooleanField(default=False)
+    is_guild_member = models.BooleanField(default=False)
+    is_online = models.BooleanField(default=False)
+    channel = models.CharField(max_length=255, blank=True, null=True)
+    dkp_balance = models.IntegerField(default=0)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

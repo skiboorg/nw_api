@@ -18,7 +18,13 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = [
 
+            'id',
             'email',
+            'is_leader',
+            'is_guild_member',
+            'dkp_balance',
+            'discord',
+            'nickname',
 
         ]
 
@@ -37,6 +43,9 @@ class UserCreateSerializer(serializers.ModelSerializer):
             User._meta.pk.name,
             "password",
             "email",
+            "nickname",
+            "discord",
+            "is_guild_member",
         )
 
     def validate(self, attrs):

@@ -13,6 +13,11 @@ class FaqSerializer(serializers.ModelSerializer):
         model = Faq
         fields = '__all__'
 
+class SocialItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SocialItem
+        fields = '__all__'
+
 
 
 

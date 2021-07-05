@@ -7,6 +7,7 @@ urlpatterns = [
 
     path('banner', views.GetBanner.as_view()),
     path('faq', views.GetFaq.as_view()),
+    path('social', views.GetSocial.as_view()),
 
 
 ]
