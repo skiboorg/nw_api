@@ -81,7 +81,7 @@ class Build(models.Model):
     checked_skills_right_w2 = models.JSONField(blank=True, null=True)
     total_rating = models.IntegerField('Рейтинг', default=1)
     votes = models.IntegerField('Голосов', default=1)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
 
 

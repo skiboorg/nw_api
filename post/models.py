@@ -22,4 +22,4 @@ class PostItem(models.Model):
         return f'{self.order} | {self.name}'
 
     class Meta:
-        ordering = ['order']
+        ordering = ['order','-created_at']

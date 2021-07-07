@@ -28,3 +28,10 @@ class SocialItem(models.Model):
 
     class Meta:
         ordering = ('order',)
+
+
+class Feedback(models.Model):
+    user = models.CharField(max_length=255, blank=True, null=True)
+    text = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True,null=True)
+    is_viewed = models.BooleanField(default=False)

@@ -35,7 +35,7 @@ class Guide(models.Model):
             return f'Гайд | {self.name} | {self.category.name}'
 
     class Meta:
-        ordering = ['created_at']
+        ordering = ['-created_at']
 
     def save(self, *args, **kwargs):
         self.name_slug = slugify(self.name)

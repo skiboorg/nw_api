@@ -11,6 +11,11 @@ from bs4 import BeautifulSoup
 import requests
 
 
+class AddFb(APIView):
+    def post(self, request):
+        data = request.data
+        Feedback.objects.create(user=data['fb_user'],text=data['fb_text'])
+        return Response(status=200)
 class Craft(APIView):
     def get(self, request):
         main_url = 'https://newworldfans.com/crafting/Arcana?tier='
