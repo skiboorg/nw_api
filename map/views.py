@@ -7,8 +7,27 @@ from .serializers import *
 from .models import *
 from bs4 import BeautifulSoup
 import requests
+import shutil
+import  os
+class ParceMap(APIView):
+    def get(self,request):
 
+        for tile in range(0,1):
+            print(tile)
+            os.mkdir(f'media/map/{tile}')
+            for y in range(1, 3):
+                for x in range(0, 70):
+                    print('y=', y)
+                    print('x=', x)
+                    url = f'https://newworldfans.com/tiles/{tile}/map_y-{y}_x{x}.jpg'
 
+                    responce = requests.get(url, stream=True)
+                    print('responce.status_code=', responce.status_code)
+                    if responce.status_code == 200:
+                        with open(f'media/map/{tile}/map_y-{y}_x{x}.jpg', 'wb') as out_file:
+                            shutil.copyfileobj(responce.raw, out_file)
+
+        return Response(status=200)
 class ParcePoi(APIView):
     def get(self,request):
         url = 'https://newworldfans.com/api/v1/map/poi'
