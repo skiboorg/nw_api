@@ -1,6 +1,6 @@
 from django.db import models
 from pytils.translit import slugify
-
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Weapon(models.Model):
@@ -73,17 +73,57 @@ class Build(models.Model):
     weapon2 = models.ForeignKey(Weapon, on_delete=models.CASCADE, null=True, blank=True,
                                verbose_name='Оружие',related_name='weapon2')
     name = models.CharField('Название ', max_length=255, blank=True, null=True)
+    purpose = models.CharField('Предназначение ', max_length=255, blank=True, null=True)
     name_slug = models.CharField(max_length=255, blank=True, null=True, db_index=True)
     description = models.TextField(blank=True, null=True)
     checked_skills_left_w1 = models.JSONField(blank=True,null=True)
     checked_skills_right_w1 = models.JSONField(blank=True,null=True)
     checked_skills_left_w2 = models.JSONField(blank=True, null=True)
     checked_skills_right_w2 = models.JSONField(blank=True, null=True)
-    total_rating = models.IntegerField('Рейтинг', default=1)
-    votes = models.IntegerField('Голосов', default=1)
+    characteristics = models.JSONField(blank=True, null=True)
+    total_rating = models.IntegerField('Рейтинг Всего', default=0)
+    rating = models.IntegerField('Рейтинг', default=0)
+    votes = models.IntegerField('Голосов', default=0)
     is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True,blank=True,null=True)
 
-
+    def save(self, *args, **kwargs):
+        if self.votes > 0:
+            self.rating = self.total_rating / self.votes
+        super(Build, self).save(*args, **kwargs)
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-rating']
+
+
+class Characteristic(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True, db_index=True)
+    name_en = models.CharField(max_length=255, blank=True, null=True, db_index=True)
+    description = models.TextField(blank=True, null=True)
+    min = models.IntegerField(default=5)
+    max = models.IntegerField(default=300)
+    step1_description = RichTextUploadingField(blank=True, null=True)
+    step1_val = models.IntegerField(default=50)
+    step2_description = RichTextUploadingField(blank=True, null=True)
+    step2_val = models.IntegerField(default=100)
+    step3_description = RichTextUploadingField(blank=True, null=True)
+    step3_val = models.IntegerField(default=150)
+    step4_description = RichTextUploadingField(blank=True, null=True)
+    step4_val = models.IntegerField(default=200)
+    step5_description = RichTextUploadingField(blank=True, null=True)
+    step5_val = models.IntegerField(default=250)
+    step6_description = RichTextUploadingField(blank=True, null=True)
+    step6_val = models.IntegerField(default=300)
+    current_val = models.IntegerField(default=5)
+
+    def __str__(self):
+        return f'{self.name}'
+
+class BuildFeedback(models.Model):
+    build = models.ForeignKey(Build, on_delete=models.CASCADE, null=True, blank=True,
+                                verbose_name='Билд',related_name='feedbacks')
+    user = models.ForeignKey('user.User', on_delete=models.CASCADE, null=True, blank=True,
+                              verbose_name='Юзер')
+    value = models.IntegerField(default=0)
+    text = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)

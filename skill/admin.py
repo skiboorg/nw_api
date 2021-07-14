@@ -7,6 +7,9 @@ class SkillInline (admin.TabularInline):
     model = Skill
     extra = 0
 
+class FeedbackInline (admin.TabularInline):
+    model = BuildFeedback
+    extra = 0
 
 class SkillAdmin(admin.ModelAdmin):
 
@@ -17,11 +20,13 @@ class SkillAdmin(admin.ModelAdmin):
 class BuildAdmin(admin.ModelAdmin):
     list_display = ['name','is_active']
     list_filter = ('is_active',)
+    inlines = [FeedbackInline]
     class Meta:
         model = Build
 
 class SkillTreeAdmin(admin.ModelAdmin):
     inlines = [SkillInline]
+
     class Meta:
         model = SkillTree
 
@@ -29,4 +34,5 @@ admin.site.register(Weapon)
 admin.site.register(Skill,SkillAdmin)
 admin.site.register(SkillTree,SkillTreeAdmin)
 admin.site.register(Build,BuildAdmin)
+admin.site.register(Characteristic)
 

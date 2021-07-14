@@ -1,10 +1,16 @@
 from rest_framework import serializers
 from .models import *
-
+from user.models import User
 
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
+        fields = '__all__'
+
+
+class CharacteristicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Characteristic
         fields = '__all__'
 
 class SkillTreeSerializer(serializers.ModelSerializer):
@@ -30,10 +36,24 @@ class WeaponsSerializer(serializers.ModelSerializer):
             'main_char',
             'is_selected'
         ]
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = [
+            'nickname',
+        ]
+
+class FeedbackSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False)
+    class Meta:
+        model = BuildFeedback
+        fields = '__all__'
 
 class BuildSerializer(serializers.ModelSerializer):
     weapon1 = WeaponSerializer(many=False, required=False, read_only=True)
     weapon2 = WeaponSerializer(many=False, required=False, read_only=True)
+    feedbacks = FeedbackSerializer(many=True, required=False, read_only=True)
     class Meta:
         model = Build
         fields = '__all__'

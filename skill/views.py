@@ -15,6 +15,10 @@ class GetWeapons(generics.ListAPIView):
     serializer_class = WeaponsSerializer
     queryset = Weapon.objects.all()
 
+class GetCharacteristics(generics.ListAPIView):
+    serializer_class = CharacteristicSerializer
+    queryset = Characteristic.objects.all()
+
 class GetWeapon(generics.RetrieveAPIView):
     serializer_class = WeaponSerializer
 
@@ -37,6 +41,8 @@ class Builds(APIView):
             checked_skills_right_w2=data['checked_skills_right_w2'],
             description=data['description'],
             name=data['name'],
+            purpose=data['purpose'],
+            characteristics=data['characteristics']
         )
         return Response({'slug':name_slug},status=200)
     def get(self,request):
@@ -156,4 +162,21 @@ class ParceHtml(APIView):
                         )
                     c += 1
                 r += 1
+        return Response(status=200)
+
+
+class AddFeedback(APIView):
+    def post(self, request):
+        data = request.data
+        print(data)
+        build = Build.objects.get(id=data['build_id'])
+        build.total_rating += data['rating']
+        build.votes += 1
+        build.save()
+        BuildFeedback.objects.create(
+            user=request.user,
+            build=build,
+            text=request.data.get('text'),
+            value=request.data.get('rating')
+        )
         return Response(status=200)
