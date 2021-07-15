@@ -4,6 +4,7 @@ from pytils.translit import slugify
 
 
 class GuideCategory(models.Model):
+    order = models.IntegerField(default=100)
     name = models.CharField('Название ', max_length=255, blank=True, null=True)
     name_slug = models.CharField(max_length=255, blank=True, null=True, db_index=True, editable=False)
 
@@ -12,7 +13,11 @@ class GuideCategory(models.Model):
         super(GuideCategory, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'№ПП{self.order} | {self.name}'
+
+    class Meta:
+        ordering = ['order']
+
 
 class Guide(models.Model):
     category = models.ForeignKey(GuideCategory,on_delete=models.CASCADE,null=True, blank=False , related_name='guides')

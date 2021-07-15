@@ -93,7 +93,7 @@ class Build(models.Model):
         super(Build, self).save(*args, **kwargs)
 
     class Meta:
-        ordering = ['-rating']
+        ordering = ['-rating','-created_at']
 
 
 class Characteristic(models.Model):
