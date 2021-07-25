@@ -41,6 +41,7 @@ class Builds(APIView):
             checked_skills_right_w2=data['checked_skills_right_w2'],
             description=data['description'],
             name=data['name'],
+            is_private=data['is_private'],
             purpose=data['purpose'],
             characteristics=data['characteristics']
         )
@@ -50,17 +51,17 @@ class Builds(APIView):
         slug = self.request.query_params.get('slug')
         if self.request.query_params.get('for') == 'build':
             try:
-                build = Build.objects.get(name_slug=slug, is_active=True)
+                build = Build.objects.get(name_slug=slug)
                 seriarizer = BuildSerializer(build, many=False)
                 return Response(seriarizer.data, status=200)
             except:
                 return Response(status=404)
         if self.request.query_params.get('for') == 'index':
-            build = Build.objects.filter(is_active=True)[:3]
+            build = Build.objects.filter(is_active=True, is_private=False)[:3]
             seriarizer = BuildShortSerializer(build, many=True)
             return Response(seriarizer.data, status=200)
         if self.request.query_params.get('for') == 'all':
-            build = Build.objects.filter(is_active=True)
+            build = Build.objects.filter(is_active=True, is_private=False)
             seriarizer = BuildShortSerializer(build, many=True)
             return Response(seriarizer.data, status=200)
 

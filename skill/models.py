@@ -85,6 +85,7 @@ class Build(models.Model):
     rating = models.IntegerField('Рейтинг', default=0)
     votes = models.IntegerField('Голосов', default=0)
     is_active = models.BooleanField(default=True)
+    is_private = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True,blank=True,null=True)
 
     def save(self, *args, **kwargs):

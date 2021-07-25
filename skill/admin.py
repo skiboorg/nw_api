@@ -18,8 +18,8 @@ class SkillAdmin(admin.ModelAdmin):
         model = Skill
 
 class BuildAdmin(admin.ModelAdmin):
-    list_display = ['name','is_active']
-    list_filter = ('is_active',)
+    list_display = ['name','is_active','is_private']
+    list_filter = ('is_active','is_private',)
     inlines = [FeedbackInline]
     class Meta:
         model = Build
