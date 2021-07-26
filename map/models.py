@@ -7,12 +7,10 @@ class Poi(models.Model):
     name_en = models.CharField('Название(оригинал)', max_length=255, blank=True, null=True)
     name_slug = models.CharField(max_length=255, blank=True, null=True, db_index=True, editable=False)
     description = models.CharField(max_length=255, blank=True, null=True, db_index=True)
-    image = models.ImageField('Изображение', upload_to='images/poi/', blank=True)
-    level = models.IntegerField(blank=True, null=True)
-    x_game = models.DecimalField(blank=True, null=True,decimal_places=8,max_digits=15)
-    x_map = models.DecimalField(blank=True, null=True,decimal_places=8,max_digits=15)
-    y_game = models.DecimalField(blank=True, null=True,decimal_places=8,max_digits=15)
-    y_map = models.DecimalField(blank=True, null=True,decimal_places=8,max_digits=15)
+    description_en = models.CharField(max_length=255, blank=True, null=True, db_index=True)
+    image = models.ImageField('Изображение', upload_to='poi/', blank=True)
+    level = models.CharField(max_length=255, blank=True, null=True)
+
     lat = models.DecimalField(blank=True, null=True,decimal_places=8,max_digits=15)
     lng = models.DecimalField(blank=True, null=True,decimal_places=8,max_digits=15)
 
@@ -31,7 +29,7 @@ class ResourceCategory(models.Model):
     name_en = models.CharField('Категория (оригинал)', max_length=255, blank=True, null=True)
     name_slug = models.CharField(max_length=255, blank=True, null=True, db_index=True, editable=False)
     image = models.ImageField('Изображение', upload_to='images/resource/', blank=True)
-    is_visible = models.BooleanField(default=True)
+    is_visible = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.name} | {self.name_en} '
@@ -44,7 +42,8 @@ class Resource(models.Model):
                                  verbose_name='Тип',related_name='resourses')
     name = models.CharField('Название', max_length=255, blank=True, null=True)
     description = models.CharField(max_length=255, blank=True, null=True, db_index=True)
-    level = models.IntegerField(blank=True, null=True)
+    description_en = models.CharField(max_length=255, blank=True, null=True, db_index=True)
+    level = models.CharField(max_length=255,blank=True, null=True)
 
     lat = models.DecimalField(blank=True, null=True,decimal_places=8,max_digits=15)
     lng = models.DecimalField(blank=True, null=True,decimal_places=8,max_digits=15)
@@ -54,7 +53,7 @@ class ResourceType(models.Model):
     name = models.CharField('Категория ', max_length=255, blank=True, null=True)
     name_slug = models.CharField(max_length=255, blank=True, null=True, db_index=True, editable=False)
     category = models.ManyToManyField(ResourceCategory, blank=True)
-    is_visible = models.BooleanField(default=True)
+    is_visible = models.BooleanField(default=False)
     marker_color = ColorField('Цвет', default='#000000')
     def save(self, *args, **kwargs):
         self.name_slug = slugify(self.name)

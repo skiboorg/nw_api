@@ -10,12 +10,7 @@ class PoiSerializer(serializers.ModelSerializer):
 class ResourceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Resource
-        fields = [
-            'description',
-            'lat',
-            'lng'
-
-        ]
+        fields = '__all__'
 
 class ResourceCategorySerializer(serializers.ModelSerializer):
     resourses = ResourceSerializer(many=True, read_only=True, required=False)
