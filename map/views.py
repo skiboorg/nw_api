@@ -111,35 +111,35 @@ class ParceResource(APIView):
             if i['category'] != 'poi':
                 description_tr=''
                 cat_tr=''
-                # if i['description']:
-                #     data = {
-                #         "folder_id": "b1grf2b1imq40far6803",
-                #         "texts": [i['description'].replace('\n\n',' ').replace('\n',' ') ],
-                #         "targetLanguageCode": "ru"
-                #     }
-                #
-                #     response = requests.post('https://translate.api.cloud.yandex.net/translate/v2/translate',
-                #                              headers=headers,
-                #                              data=json.dumps(data))
-                #     print(response.json())
-                #     description_tr = response.json().get('translations')[0]['text']
-                #     print(description_tr)
+                if i['description']:
+                    data = {
+                        "folder_id": "b1grf2b1imq40far6803",
+                        "texts": [i['description'].replace('\n\n',' ').replace('\n',' ') ],
+                        "targetLanguageCode": "ru"
+                    }
+
+                    response = requests.post('https://translate.api.cloud.yandex.net/translate/v2/translate',
+                                             headers=headers,
+                                             data=json.dumps(data))
+                    print(response.json())
+                    description_tr = response.json().get('translations')[0]['text']
+                    print(description_tr)
 
 
                 cat,create = ResourceCategory.objects.get_or_create(name_slug=i['category'])
                 if create:
-                    # data = {
-                    #     "folder_id": "b1grf2b1imq40far6803",
-                    #     "texts": [f"{i['category']}", ],
-                    #     "targetLanguageCode": "ru"
-                    # }
-                    #
-                    # response = requests.post('https://translate.api.cloud.yandex.net/translate/v2/translate',
-                    #                          headers=headers,
-                    #                          data=json.dumps(data))
-                    # print(response.json())
-                    # cat_tr = response.json().get('translations')[0]['text']
-                    # print(description_tr)
+                    data = {
+                        "folder_id": "b1grf2b1imq40far6803",
+                        "texts": [f"{i['category']}", ],
+                        "targetLanguageCode": "ru"
+                    }
+
+                    response = requests.post('https://translate.api.cloud.yandex.net/translate/v2/translate',
+                                             headers=headers,
+                                             data=json.dumps(data))
+                    print(response.json())
+                    cat_tr = response.json().get('translations')[0]['text']
+                    print(description_tr)
                     for url in img_urls:
                         headers_img = {
                             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
