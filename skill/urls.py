@@ -9,7 +9,7 @@ urlpatterns = [
     path('build', views.Builds.as_view()),
     path('feedback', views.AddFeedback.as_view()),
 
-    path('parse', views.ParceHtml.as_view()),
+    # path('parse', views.ParceHtml.as_view()),
 
 
 
