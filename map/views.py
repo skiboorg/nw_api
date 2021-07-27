@@ -30,7 +30,7 @@ class ParceMap(APIView):
         return Response(status=200)
 class ParcePoi(APIView):
     def get(self,request):
-        key = 't1.9euelZqOlsyek56Wxo2Ty5uQlpSNje3rnpWazcjMkJbLx5DLnpeYkovOkovl8_ciMwZ4-e9NRCJ6_d3z92JhA3j5701EInr9.TeS8sAFFwH-2tBOOaVgq0JsVKq_j0UTcEU9HEwQJrVmdDyjMk0Sj-pPrTnM9B95e_sP_Sm7mTfvg_h5smLYRAw'
+        key = 't1.9euelZqLnpOUkYybi53PyJjKyZuMku3rnpWazcjMkJbLx5DLnpeYkovOkovl9PdmQgF4-e9UYSLz3fT3JnF-d_nvVGEi8w.bOAlto-xkC1uK4skQVJVb5YQ_eY1xXCcRCLSZqcGSUq09Ri1_9PRH-OBHi1p8x9AqOAipYpAV20FwNEopaSnBQ'
 
         headers = {
             'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ class ParcePoi(APIView):
 class ParceResource(APIView):
     def get(self,request):
 
-        key = 't1.9euelZqOlsyek56Wxo2Ty5uQlpSNje3rnpWazcjMkJbLx5DLnpeYkovOkovl8_ciMwZ4-e9NRCJ6_d3z92JhA3j5701EInr9.TeS8sAFFwH-2tBOOaVgq0JsVKq_j0UTcEU9HEwQJrVmdDyjMk0Sj-pPrTnM9B95e_sP_Sm7mTfvg_h5smLYRAw'
+        key = 't1.9euelZqLnpOUkYybi53PyJjKyZuMku3rnpWazcjMkJbLx5DLnpeYkovOkovl9PdmQgF4-e9UYSLz3fT3JnF-d_nvVGEi8w.bOAlto-xkC1uK4skQVJVb5YQ_eY1xXCcRCLSZqcGSUq09Ri1_9PRH-OBHi1p8x9AqOAipYpAV20FwNEopaSnBQ'
 
         headers = {
             'Content-Type': 'application/json',
@@ -140,13 +140,13 @@ class ParceResource(APIView):
                     print(response.json())
                     cat_tr = response.json().get('translations')[0]['text']
                     print(description_tr)
-                    for url in img_urls:
-                        headers_img = {
-                            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
-                        response = requests.get(f'{url}{i["resource_icon"].lower()}.png', headers=headers_img)
-                        print(response.status_code)
-                        with open(f'media/icons/{i["resource_icon"].lower()}.png', 'wb') as f:
-                            f.write(response.content)
+                    # for url in img_urls:
+                    #     headers_img = {
+                    #         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+                    #     response = requests.get(f'{url}{i["resource_icon"].lower()}.png', headers=headers_img)
+                    #     print(response.status_code)
+                    #     with open(f'media/icons/{i["resource_icon"].lower()}.png', 'wb') as f:
+                    #         f.write(response.content)
 
                     cat.name=cat_tr
                     cat.name_en=i['category'].capitalize()
