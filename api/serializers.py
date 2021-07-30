@@ -18,6 +18,11 @@ class SocialItemSerializer(serializers.ModelSerializer):
         model = SocialItem
         fields = '__all__'
 
+class TextsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Texts
+        fields = '__all__'
+
 
 
 

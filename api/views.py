@@ -11,6 +11,13 @@ from bs4 import BeautifulSoup
 import requests
 
 
+class GetTexts(generics.RetrieveAPIView):
+    serializer_class = TextsSerializer
+    def get_object(self):
+        return Texts.objects.all().first()
+
+
+
 class AddFb(APIView):
     def post(self, request):
         data = request.data

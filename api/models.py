@@ -1,5 +1,5 @@
 from django.db import models
-
+from ckeditor_uploader.fields import RichTextUploadingField
 
 class Banner(models.Model):
     order = models.IntegerField(default=10)
@@ -35,3 +35,7 @@ class Feedback(models.Model):
     text = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True,null=True)
     is_viewed = models.BooleanField(default=False)
+
+class Texts(models.Model):
+    about_text = RichTextUploadingField(blank=True, null=True)
+    policy_text = RichTextUploadingField(blank=True, null=True)

@@ -9,6 +9,8 @@ urlpatterns = [
     path('faq', views.GetFaq.as_view()),
     path('social', views.GetSocial.as_view()),
     path('add_fb', views.AddFb.as_view()),
+    path('texts', views.GetTexts.as_view()),
+
 
 
 ]
