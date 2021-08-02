@@ -19,5 +19,9 @@ class Post(generics.RetrieveAPIView):
     serializer_class = PostSerializer
 
     def get_object(self):
-        return PostItem.objects.get(name_slug=self.request.query_params.get('slug'))
+        try:
+            item = PostItem.objects.filter(name_slug=self.request.query_params.get('slug'))[0]
+        except:
+            item = PostItem.objects.filter(name_slug=self.request.query_params.get('slug'))
+        return item
 

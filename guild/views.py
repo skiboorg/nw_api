@@ -21,7 +21,11 @@ class GetGuild(generics.RetrieveAPIView):
     serializer_class = GuildSerializer
 
     def get_object(self):
-        return Guild.objects.get(name_slug=self.request.query_params.get('slug'))
+        try:
+            item = Guild.objects.filter(name_slug=self.request.query_params.get('slug'))[0]
+        except:
+            item = Guild.objects.filter(name_slug=self.request.query_params.get('slug'))
+        return item
 
 class CreateGuild(APIView):
     def post(self,request):
