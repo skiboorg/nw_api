@@ -194,7 +194,6 @@ class BuildsCorrect(APIView):
 class BuildsFilter(APIView):
     def post(self, request):
         data = request.data
-        print(data)
         first_weapon = None
         second_weapon = None
         try:
@@ -205,14 +204,14 @@ class BuildsFilter(APIView):
             second_weapon=Weapon.objects.get(name=data.get('build_second_weapon'))
         except:
             pass
-        print(first_weapon)
-        print(second_weapon)
+        #print(first_weapon)
+        #print(second_weapon)
         filter_builds = Build.objects.filter(role=data.get('build_role'),purpose=data.get('build_purpose'))
 
         if first_weapon:
             filter_builds = filter_builds.filter(weapon1=first_weapon)
         if second_weapon:
             filter_builds = filter_builds.filter(weapon2=second_weapon)
-        print(filter_builds)
+        #print(filter_builds)
         seriarizer = BuildShortSerializer(filter_builds, many=True)
         return Response(seriarizer.data, status=200)
