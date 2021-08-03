@@ -2,6 +2,9 @@ from django.db import models
 from pytils.translit import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
 
+def humanize_time(time):
+    from django.utils.timesince import timesince
+    return timesince(time)
 
 class Weapon(models.Model):
     order = models.IntegerField(default=50)
@@ -74,6 +77,7 @@ class Build(models.Model):
                                verbose_name='Оружие',related_name='weapon2')
     name = models.CharField('Название ', max_length=255, blank=True, null=True)
     purpose = models.CharField('Предназначение ', max_length=255, blank=True, null=True)
+    role = models.CharField('Роль ', max_length=255, blank=True, default='Не указана')
     name_slug = models.CharField(max_length=255, blank=True, null=True, db_index=True)
     description = models.TextField(blank=True, null=True)
     checked_skills_left_w1 = models.JSONField(blank=True,null=True)
@@ -92,6 +96,9 @@ class Build(models.Model):
         if self.votes > 0:
             self.rating = self.total_rating / self.votes
         super(Build, self).save(*args, **kwargs)
+
+    def get_humanize_time(self):
+        return humanize_time(self.created_at)
 
     class Meta:
         ordering = ['-rating','-created_at']

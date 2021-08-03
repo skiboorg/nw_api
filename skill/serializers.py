@@ -61,6 +61,7 @@ class BuildSerializer(serializers.ModelSerializer):
 class BuildShortSerializer(serializers.ModelSerializer):
     weapon1 = WeaponsSerializer(many=False, required=False, read_only=True)
     weapon2 = WeaponsSerializer(many=False, required=False, read_only=True)
+    created = serializers.CharField(source='get_humanize_time')
     class Meta:
         model = Build
         fields = '__all__'

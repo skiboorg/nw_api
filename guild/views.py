@@ -29,10 +29,8 @@ class GetGuild(generics.RetrieveAPIView):
 
 class CreateGuild(APIView):
     def post(self,request):
-
         data=json.loads(request.data.get('data'))
         img=request.data.get('img')
-
         guild = Guild.objects.create(
             name=data['name'],
             fraction=data['fraction'],
@@ -42,11 +40,9 @@ class CreateGuild(APIView):
             description=data['description'],
             discord_link=data['discord_link']
         )
-
         if img:
             guild.image = img
             guild.save()
-
         return Response(status=200)
 
 class Feedback(APIView):

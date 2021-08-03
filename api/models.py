@@ -7,6 +7,7 @@ class Banner(models.Model):
     bottom_text = models.CharField(max_length=255, blank=True, null=True)
     image = models.ImageField('Изображение', upload_to='images/banner/', blank=True, null=True)
     url = models.CharField(max_length=255, blank=True, null=True)
+    is_url_for_site = models.BooleanField('cссылка с баннера на другой сайт?', default=False)
 
     class Meta:
         ordering = ('order',)
