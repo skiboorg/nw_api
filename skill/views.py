@@ -43,6 +43,7 @@ class Builds(APIView):
             name=data['name'],
             is_private=data['is_private'],
             purpose=data['purpose'],
+            role=data['role'],
             characteristics=data['characteristics']
         )
         return Response({'slug':name_slug},status=200)
