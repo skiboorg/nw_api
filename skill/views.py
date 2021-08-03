@@ -183,6 +183,14 @@ class AddFeedback(APIView):
         )
         return Response(status=200)
 
+class BuildsCorrect(APIView):
+    def get(self, request):
+        buids = Build.objects.all()
+        for build in buids:
+            build.role = 'Не указана'
+            build.save()
+        return Response(status=200)
+
 class BuildsFilter(APIView):
     def post(self, request):
         data = request.data
