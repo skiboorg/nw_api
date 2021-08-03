@@ -26,7 +26,6 @@ class Guild(models.Model):
 
     def save(self, *args, **kwargs):
         self.name_slug = slugify(self.name)
-        print(len(self.feedbacks))
         if self.votes_count > 0:
             self.total_rating = self.rating / self.votes_count
         super(Guild, self).save(*args, **kwargs)
