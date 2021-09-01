@@ -206,7 +206,9 @@ class BuildsFilter(APIView):
             pass
         #print(first_weapon)
         #print(second_weapon)
-        filter_builds = Build.objects.filter(role=data.get('build_role'),purpose=data.get('build_purpose'))
+        filter_builds = Build.objects.filter(role=data.get('build_role'),
+                                             purpose=data.get('build_purpose'),
+                                             is_private=False)
 
         if first_weapon:
             filter_builds = filter_builds.filter(weapon1=first_weapon)

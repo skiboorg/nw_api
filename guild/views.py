@@ -54,9 +54,6 @@ class Feedback(APIView):
         data = request.data
         print(data)
         guild = Guild.objects.get(id=data['guild_id'])
-        guild.rating += data['rating']
-        guild.votes_count += 1
-        guild.save()
         GuildFeedback.objects.create(
             user=request.user,
             guild=guild,

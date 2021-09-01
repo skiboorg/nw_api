@@ -41,3 +41,11 @@ class GuildFeedback(models.Model):
     rating = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=False)
+
+
+    def save(self, *args, **kwargs):
+        if self.is_active:
+            self.guild.rating += self.rating
+            self.guild.votes_count += 1
+            self.guild.save()
+        super(GuildFeedback, self).save(*args, **kwargs)

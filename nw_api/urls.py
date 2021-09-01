@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    # path('api/item/', include('items.urls')),
+    path('api/item/', include('item.urls')),
 
     path('api/user/', include('user.urls')),
     path('api/', include('api.urls')),
@@ -15,6 +15,7 @@ urlpatterns = [
     path('api/post/', include('post.urls')),
     path('api/guild/', include('guild.urls')),
     path('api/guide/', include('guide.urls')),
+    path('api/craft/', include('craft.urls')),
     # path('api/dkp/', include('dkp.urls')),
 
     path('ckeditor/', include('ckeditor_uploader.urls')),
