@@ -1,18 +1,104 @@
 import json
 
+from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics
+from rest_framework.pagination import PageNumberPagination
 import requests
 from .models import *
+from .serializers import *
 import os
 import uuid
+
+class ItemsPagination(PageNumberPagination):
+    page_size = 30
+    page_size_query_param = 'page_size'
+    max_page_size = 10000
+
+    def get_paginated_response(self, data):
+        return Response({
+            'links':{
+                'next': self.get_next_link(),
+                'prev': self.get_previous_link(),
+            },
+            'page_count':self.page.paginator.num_pages,
+            'results':data
+        })
+
+
+class Del(APIView):
+    def get(self,request):
+        list=self.request.query_params.get('list').split(',')
+        print(list)
+        for i in list:
+            ii = int(i)
+            try:
+                Perk.objects.get(id=ii).delete()
+            except:
+                pass
+        return Response(status=200)
+
+
+class GetItem(generics.RetrieveAPIView):
+    serializer_class = ItemSerializer
+    def get_object(self):
+        try:
+            item = Item.objects.filter(name_slug=self.request.query_params.get('slug'))[0]
+        except:
+            item = Item.objects.filter(name_slug=self.request.query_params.get('slug'))
+        return item
+class GetItems(APIView):
+    pagination_class = ItemsPagination
+
+    def get(self, request):
+        items = None
+
+        if request.GET.get('type') == 'a':
+            items = Item.objects.all()
+
+        if request.GET.get('type') == 's':
+            items = Item.objects.filter(subcategory__name_slug=request.GET.get('s'))
+
+        page = self.paginate_queryset(items)
+        if page is not None:
+            serializer = ItemSerializer(page, many=True, context={'request': request})
+
+            return self.get_paginated_response(serializer.data)
+
+    @property
+    def paginator(self):
+        if not hasattr(self, '_paginator'):
+            if self.pagination_class is None:
+                self._paginator = None
+            else:
+                self._paginator = self.pagination_class()
+        return self._paginator
+
+    def paginate_queryset(self, queryset):
+        if self.paginator is None:
+            return None
+        return self.paginator.paginate_queryset(queryset, self.request, view=self)
+
+    def get_paginated_response(self, data):
+        assert self.paginator is not None
+        return self.paginator.get_paginated_response(data)
+
+
+class GetCategory(generics.ListAPIView):
+    serializer_class = ItemCategorySerializer
+    queryset = ItemCategory.objects.all()
+
+
+class GetSubCategory(generics.ListAPIView):
+    serializer_class = ItemSubCategorySerializer
+    queryset = ItemSubCategory.objects.all()
+
 
 # item icon https://cdn.nwdb.info/db/v2/icons/items/weapon/1hlongsword_widowmakert5.png
 # item image https://cdn.nwdb.info/db/v2/icons/items_hires/1hlongsword_widowmakert5.png
 # item info https://nwdb.info/db/item/1hlongsword_corallasht5.json
 # perk info https://nwdb.info/db/perk/perkid_gem_voiddmg4.json
-
 
 def get_image(url,path,filename):
     headers_img = {
@@ -25,7 +111,6 @@ def get_image(url,path,filename):
 
     with open(f'media/{path}/{filename}', 'wb') as f:
         f.write(response.content)
-
 
 
 def get_perk_info(id):
@@ -209,7 +294,7 @@ def get_item_info(id,hasRandomPerks,can_be_crafted,quest_reward,category):
     print(data['id'])
 
 
-class GetItems(APIView):
+class ParseItems(APIView):
     def get(self,request):
         headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}

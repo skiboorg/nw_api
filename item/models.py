@@ -2,20 +2,6 @@ from django.db import models
 from pytils.translit import slugify
 
 
-class ItemCategory(models.Model):
-    name = models.CharField('Название', max_length=255, blank=True, null=True)
-    name_en = models.CharField('Название(оригинал)', max_length=255, blank=True, null=True)
-    name_slug = models.CharField(max_length=255, blank=True, null=True, db_index=True, editable=False)
-    internal_id = models.CharField(max_length=255, blank=True, null=True, db_index=True, editable=False)
-
-    def save(self, *args, **kwargs):
-        self.name_slug = slugify(self.name)
-        super(ItemCategory, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return f'{self.name_en}'
-
-
 class ItemSubCategory(models.Model):
     name = models.CharField('Название', max_length=255, blank=True, null=True)
     name_en = models.CharField('Название(оригинал)', max_length=255, blank=True, null=True)
@@ -23,11 +9,29 @@ class ItemSubCategory(models.Model):
     internal_id = models.CharField(max_length=255, blank=True, null=True, db_index=True, editable=False)
 
     def save(self, *args, **kwargs):
-        self.name_slug = slugify(self.name)
+        self.name_slug = slugify(self.name_en)
         super(ItemSubCategory, self).save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.name_en}'
+
+
+class ItemCategory(models.Model):
+    name = models.CharField('Название', max_length=255, blank=True, null=True)
+    subcategories = models.ManyToManyField(ItemSubCategory,blank=True,verbose_name='Податегории')
+    name_en = models.CharField('Название(оригинал)', max_length=255, blank=True, null=True)
+    name_slug = models.CharField(max_length=255, blank=True, null=True, db_index=True, editable=False)
+    internal_id = models.CharField(max_length=255, blank=True, null=True, db_index=True, editable=False)
+
+    def save(self, *args, **kwargs):
+        self.name_slug = slugify(self.name_en)
+        super(ItemCategory, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return f'{self.name_en}'
+
+
+
 
 
 class PerkType(models.Model):
@@ -37,7 +41,7 @@ class PerkType(models.Model):
     internal_id = models.CharField(max_length=255, blank=True, null=True, db_index=True, editable=False)
 
     def save(self, *args, **kwargs):
-        self.name_slug = slugify(self.name)
+        self.name_slug = slugify(self.name_en)
         super(PerkType, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -70,7 +74,7 @@ class Perk(models.Model):
     scalingPerGearScore = models.DecimalField(max_digits=21,decimal_places=20,blank=True,null=True)
 
     def save(self, *args, **kwargs):
-        self.name_slug = slugify(self.name)
+        self.name_slug = slugify(self.name_en)
         super(Perk, self).save(*args, **kwargs)
 
     def __str__(self):

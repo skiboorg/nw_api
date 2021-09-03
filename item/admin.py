@@ -11,7 +11,7 @@ class ItemAttributeScaleInline (admin.TabularInline):
 class ItemAdmin(admin.ModelAdmin):
     list_display = ['name']
     inlines = [ItemAttributeScaleInline]
-    list_filter = ('category',)
+    list_filter = ('category','subcategory',)
     class Meta:
         model = Item
 
