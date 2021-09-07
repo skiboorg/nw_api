@@ -2,6 +2,7 @@ import json
 from pytils.translit import slugify
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.throttling import UserRateThrottle
 from rest_framework import generics
 from .serializers import *
 from .models import *
@@ -179,6 +180,7 @@ class GetPoi(generics.ListAPIView):
     queryset = Poi.objects.all()
 
 class GetResourse(generics.ListAPIView):
+    throttle_classes = [UserRateThrottle]
     serializer_class = ResourceTypeSerializer
     queryset = ResourceType.objects.all()
 
