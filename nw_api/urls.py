@@ -10,7 +10,7 @@ urlpatterns = [
 
     path('api/user/', include('user.urls')),
     path('api/', include('api.urls')),
-    path('api/map/', include('map.urls')),
+    # path('api/map/', include('map.urls')),
     path('api/skill/', include('skill.urls')),
     path('api/post/', include('post.urls')),
     path('api/guild/', include('guild.urls')),
