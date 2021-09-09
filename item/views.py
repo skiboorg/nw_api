@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
+
 import requests
 from .models import *
 from .serializers import *
@@ -300,7 +301,7 @@ class ParseItems(APIView):
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
         category = 'resources'
         #category = 'armors'
-        item_category, created = ItemCategory.objects.get_or_create(name='Ресурсы', name_en='Resources', internal_id='resources')
+        item_category, created = ItemCategory.objects.get_or_create(name='Resources', name_en='resources', internal_id='resources')
 
         url = f'https://nwdb.info/db/items/{category}/page/1.json'
         responce_page_count = requests.get(url,headers=headers)
